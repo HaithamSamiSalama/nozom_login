@@ -1,0 +1,453 @@
+/* 
+   loginscr.css - Custom Premium Styling for Frappe Login Screen
+   Designed by Antigravity
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #6366f1;
+    /* Indigo */
+    --primary-hover: #4f46e5;
+    --bg-gradient-start: #0f172a;
+    /* Slate 900 */
+    --bg-gradient-end: #1e1b4b;
+    /* Indigo 950 */
+    --card-bg: rgba(255, 255, 255, 0.08);
+    --card-border: rgba(255, 255, 255, 0.12);
+    --text-color: #f1f5f9;
+    --text-muted: #94a3b8;
+    --input-bg: rgba(255, 255, 255, 0.05);
+    --input-border: rgba(255, 255, 255, 0.1);
+    --input-focus-border: #818cf8;
+    --shadow-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Override body and page wrapper styles specifically for the login/signup routes */
+body[data-path="login"],
+body[data-path="signup"],
+body[data-path="forgot"],
+body {
+    font-family: 'Outfit', sans-serif !important;
+    background: radial-gradient(circle at top right, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%) !important;
+    color: var(--text-color) !important;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+/* Ensure navbar/footer are hidden if not overridden in template */
+.web-header,
+.web-footer {
+    display: none !important;
+}
+
+/* General Layout Containers */
+section.for-login,
+section.for-email-login,
+section.for-signup,
+section.for-forgot,
+section.for-login-with-email-link {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Glassmorphic Page Card */
+.login-content.page-card {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--card-border) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px !important;
+    box-shadow: 0 20px 40px -5px var(--shadow-color),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.15) !important;
+    padding: 35px !important;
+    margin-top: 20px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.login-content.page-card:hover {
+    box-shadow: 0 30px 60px -10px var(--shadow-color),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.25) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Head section inside card or above it */
+.page-card-head {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.page-card-head h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-top: 15px;
+    letter-spacing: -0.025em;
+}
+
+.page-card-head h9 {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 5px 0;
+}
+
+.page-card-head hr {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.15), transparent);
+    margin: 15px 0;
+}
+
+/* App Logo Styling */
+.app-logo {
+    max-height: 80px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+    transition: transform 0.4s ease;
+    margin: 0 auto;
+    display: block;
+}
+
+.app-logo:hover {
+    transform: scale(1.05);
+}
+
+/* Form controls / inputs */
+.form-group {
+    margin-bottom: 20px !important;
+    position: relative;
+}
+
+.email-field,
+.password-field {
+    position: relative;
+    width: 100%;
+}
+
+.form-control {
+    width: 100% !important;
+    background-color: var(--input-bg) !important;
+    border: 1px solid var(--input-border) !important;
+    color: #ffffff !important;
+    padding: 14px 16px 14px 44px !important;
+    border-radius: 12px !important;
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+    transition: all 0.25s ease !important;
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    border-color: var(--input-focus-border) !important;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.25) !important;
+    outline: none !important;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Field Icons styling */
+.field-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    stroke: var(--text-muted);
+    fill: none;
+    pointer-events: none;
+    transition: stroke 0.25s ease;
+}
+
+.form-control:focus+.field-icon {
+    stroke: var(--input-focus-border);
+}
+
+/* Show/Hide password toggle */
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary-color) !important;
+    user-select: none;
+    transition: color 0.2s ease;
+}
+
+.toggle-password:hover {
+    color: var(--primary-hover) !important;
+}
+
+/* Forgot Password Message */
+.forgot-password-message {
+    text-align: right;
+    margin-top: 8px;
+    margin-bottom: 24px;
+}
+
+.forgot-password-message a {
+    color: var(--text-muted) !important;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.forgot-password-message a:hover {
+    color: var(--primary-color) !important;
+    text-decoration: underline;
+}
+
+/* Page Card Actions / Buttons */
+.page-card-actions {
+    margin-top: 24px;
+}
+
+.btn-primary.btn-login,
+.btn-login {
+    width: 100% !important;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%) !important;
+    border: none !important;
+    color: #ffffff !important;
+    padding: 14px 20px !important;
+    border-radius: 12px !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.01em;
+    cursor: pointer !important;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.btn-primary.btn-login:hover,
+.btn-login:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45) !important;
+    filter: brightness(1.1);
+}
+
+.btn-primary.btn-login:active,
+.btn-login:active {
+    transform: translateY(0) !important;
+}
+
+/* Sign up and back helper messages */
+.sign-up-message {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.sign-up-message a {
+    color: var(--primary-color) !important;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 5px;
+    transition: color 0.2s ease;
+}
+
+.sign-up-message a:hover {
+    color: var(--primary-hover) !important;
+    text-decoration: underline;
+}
+
+/* Social logins (disabled by comments in custom login.html but styled just in case) */
+.social-logins {
+    margin-top: 20px;
+}
+
+.login-divider {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 15px 0;
+}
+
+.btn-login-option {
+    background-color: var(--input-bg) !important;
+    border: 1px solid var(--input-border) !important;
+    color: #ffffff !important;
+    border-radius: 12px !important;
+    padding: 12px !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-login-option:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Noscript Warning */
+noscript .text-center {
+    background-color: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+/* Subscription Expiry Banner & Countdown */
+.subscription-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 20px;
+    border-radius: 16px;
+    margin-top: 25px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-size: 0.9rem;
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
+    animation: fadeInDown 0.5s ease-out;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.subscription-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.subscription-info {
+    flex: 1;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    font-weight: 500;
+}
+
+.subscription-label {
+    color: var(--text-muted);
+}
+
+.subscription-date {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.subscription-countdown {
+    display: flex;
+    align-items: center;
+}
+
+.countdown-badge {
+    background-color: rgba(99, 102, 241, 0.15);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: #a5b4fc;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+/* Status variants */
+.subscription-banner.status-active {
+    border-color: rgba(16, 185, 129, 0.25);
+    background: rgba(16, 185, 129, 0.05);
+}
+
+.subscription-banner.status-active .subscription-icon {
+    color: #34d399;
+}
+
+.subscription-banner.status-active .countdown-badge {
+    background-color: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: #34d399;
+}
+
+.subscription-banner.status-warning {
+    border-color: rgba(245, 158, 11, 0.3);
+    background: rgba(245, 158, 11, 0.06);
+    box-shadow: 0 10px 20px -5px rgba(245, 158, 11, 0.15);
+}
+
+.subscription-banner.status-warning .subscription-icon {
+    color: #fbbf24;
+}
+
+.subscription-banner.status-warning .countdown-badge {
+    background-color: rgba(245, 158, 11, 0.18);
+    border-color: rgba(245, 158, 11, 0.4);
+    color: #fbbf24;
+    animation: pulseWarning 2s infinite ease-in-out;
+}
+
+.subscription-banner.status-expired {
+    border-color: rgba(239, 68, 68, 0.35);
+    background: rgba(239, 68, 68, 0.08);
+    box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.2);
+}
+
+.subscription-banner.status-expired .subscription-icon {
+    color: #f87171;
+}
+
+.subscription-banner.status-expired .subscription-date {
+    text-decoration: line-through;
+    color: #f87171;
+}
+
+.subscription-banner.status-expired .countdown-badge.badge-expired {
+    background-color: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #f87171;
+}
+
+@keyframes pulseWarning {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.2);
+    }
+
+    50% {
+        box-shadow: 0 0 8px 2px rgba(245, 158, 11, 0.4);
+    }
+}

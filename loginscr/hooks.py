@@ -12,6 +12,7 @@ website_route_rules = [
     {"from_route": "/login", "to_route": "login"},
 ]
 
+
 # Apps
 # ------------------
 
