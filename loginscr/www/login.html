@@ -122,7 +122,8 @@
                         -->
                 <!-- <h9>{{ _("By Haitham Salama") }}</h9>
                         <br> -->
-                <!--<h9>{{ _("www.haithamsalama.com") }}</h9>-->
+                <h9><a style="color: rgb(241, 241, 241);" href="https://haithamsalama.com">www.HaithamSalama.com</a>
+                </h9>
             </div>
             <!--<div class="social-logins text-center">
                         {% if not disable_user_pass_login or (ldap_settings and ldap_settings.enabled) %}
@@ -173,6 +174,47 @@
 {%- endif -%}
 </form>
 </div>
+
+<section class='for-forgot'>
+    {{ logo_section('Forgot Password') }}
+    <div class="login-content page-card">
+        <form class="form-signin form-forgot hide" role="form">
+            <div class="page-card-body">
+                <div class="email-field">
+                    <input type="email" id="forgot_email" class="form-control" placeholder="{{ _('Email Address') }}"
+                        required autofocus autocomplete="username">
+                    <svg class="field-icon email-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <use class="es-lock" href="#es-line-email"></use>
+                    </svg>
+
+                </div>
+            </div>
+            <div class="page-card-actions">
+                <button class="btn btn-sm btn-primary btn-block btn-forgot" type="submit">{{ _("Reset Password")
+                    }}</button>
+                <p class="text-center sign-up-message">
+                    <a href="#login">{{ _("Back to Login") }}</a>
+                </p>
+            </div>
+
+        </form>
+    </div>
+</section>
+
+
+<!-- زر واتساب ثابت -->
+<a class="whatsapp-logo" href="https://wa.me/971505005217" target="_blank">
+    <img src="/assets/loginscr/images/WhatsApp.png" alt="WhatsApp" width="35" height="35" style="pointer-events: none;">
+</a>
+
+<!-- <style>
+    /* تأثير عند المرور بالماوس */
+    .whatsapp-logo:hover {
+        transform: scale(1.3);
+    }
+</style> -->
+
 <!--{%- if not disable_signup and not disable_user_pass_login -%}
 <div class="text-center sign-up-message">
     {{ _("Don't have an account?") }}
@@ -214,32 +256,6 @@
 
 </section>
 
-<section class='for-forgot'>
-    {{ logo_section('Forgot Password') }}
-    <div class="login-content page-card">
-        <form class="form-signin form-forgot hide" role="form">
-            <div class="page-card-body">
-                <div class="email-field">
-                    <input type="email" id="forgot_email" class="form-control" placeholder="{{ _('Email Address') }}"
-                        required autofocus autocomplete="username">
-                    <svg class="field-icon email-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <use class="es-lock" href="#es-line-email"></use>
-                    </svg>
-
-                </div>
-            </div>
-            <div class="page-card-actions">
-                <button class="btn btn-sm btn-primary btn-block btn-forgot" type="submit">{{ _("Reset Password")
-                    }}</button>
-                <p class="text-center sign-up-message">
-                    <a href="#login">{{ _("Back to Login") }}</a>
-                </p>
-            </div>
-
-        </form>
-    </div>
-</section>
 
 
 
