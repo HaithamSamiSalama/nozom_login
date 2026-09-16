@@ -1,10 +1,11 @@
 # Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
-
+from frappe.utils import today, getdate, date_diff
 from urllib.parse import urljoin, urlparse
 
 import frappe
+from loginscr.subscription import get_subscription_status
 import frappe.utils
 from frappe import _
 from frappe.apps import get_default_path
@@ -118,28 +119,174 @@ def get_context(context):
 		else None
 	)
 
-	# Read subscription expiry data
-	expiry_date_str = None
-	remaining_days = None
-	try:
-		import os
-		import datetime
-		data_txt_path = frappe.get_site_path('data.txt')
-		if os.path.exists(data_txt_path):
-			with open(data_txt_path, 'r') as f:
-				expiry_date_str = f.read().strip()
-			if expiry_date_str:
-				expiry_date = datetime.datetime.strptime(expiry_date_str, "%d/%m/%Y").date()
-				today = datetime.date.today()
-				remaining_days = (expiry_date - today).days
-	except Exception:
-		frappe.log_error(title="Subscription Check Error")
+	# Subscription provider:
+	# - legacy_file keeps current Milenyum clients unchanged.
+	# - nozom reads subscription state from NOZOM Cloud.
+	subscription_status = get_subscription_status()
 
-	context["expiry_date"] = expiry_date_str
-	context["remaining_days"] = remaining_days
+	context["subscription_provider"] = (
+		subscription_status.get("provider")
+	)
+
+	context["subscription_status"] = (
+		subscription_status.get("status")
+	)
+
+	context["expiry_date"] = (
+		subscription_status.get("expiry_date")
+	)
+
+	context["remaining_days"] = (
+		subscription_status.get("remaining_days")
+	)
+
+	context["subscription_blocked"] = bool(
+		subscription_status.get("blocked")
+	)
+
+	context["subscription_message"] = (
+		subscription_status.get("message")
+	)
+
+	context["subscription_source_available"] = (
+		subscription_status.get(
+			"source_available",
+			True,
+		)
+	)
+
+
+	# Company name is displayed as text only.
+	# NOZOM identity and logo remain fixed.
+	default_company = frappe.defaults.get_global_default(
+		"company"
+	)
+
+	company_name = None
+
+	if default_company:
+		company_name = frappe.db.get_value(
+			"Company",
+			default_company,
+			"company_name",
+		)
+
+	if not company_name:
+		company_name = frappe.db.get_value(
+			"Company",
+			{},
+			"company_name",
+			order_by="creation asc",
+		)
+
+	context["company_name"] = (
+		company_name
+		or context.get("app_name")
+		or _("Company System")
+	)
+
+	context["is_nozom_site"] = (
+		subscription_status.get("provider")
+		== "nozom"
+	)
+
+	context["nozom_logo"] = (
+		"/assets/loginscr/images/nozom-logo.png"
+	)
+
+	context["nozom_website"] = (
+		"https://www.nozom.cloud"
+	)
+
+	context["nozom_whatsapp"] = (
+		"https://wa.me/971505005217"
+	)
+
+
+	# Dynamic company identity
+	default_company = frappe.defaults.get_global_default(
+		"company"
+	)
+
+	company = None
+
+	if default_company:
+		company = frappe.db.get_value(
+			"Company",
+			default_company,
+			[
+				"name",
+				"company_name",
+				"company_logo",
+				"country",
+				"default_currency",
+			],
+			as_dict=True,
+		)
+
+	if not company:
+		companies = frappe.get_all(
+			"Company",
+			fields=[
+				"name",
+				"company_name",
+				"company_logo",
+				"country",
+				"default_currency",
+			],
+			order_by="creation asc",
+			limit=1,
+		)
+
+		company = companies[0] if companies else None
+
+	context["company_name"] = (
+		company.get("company_name")
+		if company
+		else context.get("app_name")
+	)
+
+	context["company_logo"] = (
+		company.get("company_logo")
+		if company
+		else None
+	)
+
+	context["company_country"] = (
+		company.get("country")
+		if company
+		else None
+	)
+
+	context["company_currency"] = (
+		company.get("default_currency")
+		if company
+		else None
+	)
+
+	context["is_nozom_site"] = (
+		subscription_status.get("provider")
+		== "nozom"
+	)
+
+	context["login_brand_name"] = (
+		"NOZOM Cloud"
+		if context["is_nozom_site"]
+		else (
+			frappe.get_website_settings(
+				"app_name"
+			)
+			or "Milenyum"
+		)
+	)
+
+	context["login_logo"] = (
+		context["company_logo"]
+		or "/assets/loginscr/images/app_logo.png"
+	)
 
 	return context
-
+#------------------
 
 @frappe.whitelist(allow_guest=True)
 def login_via_token(login_token: str):

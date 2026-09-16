@@ -1,474 +1,1020 @@
-/* 
-   loginscr.css - Custom Premium Styling for Frappe Login Screen
-   Designed by Antigravity
-*/
-
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap");
 
 :root {
-    --primary-color: #6366f1;
-    /* Indigo */
-    --primary-hover: #4f46e5;
-    --bg-gradient-start: #0f172a;
-    /* Slate 900 */
-    --bg-gradient-end: #1e1b4b;
-    /* Indigo 950 */
-    --card-bg: rgba(255, 255, 255, 0.08);
-    --card-border: rgba(255, 255, 255, 0.12);
-    --text-color: #f1f5f9;
-    --text-muted: #94a3b8;
-    --input-bg: rgba(255, 255, 255, 0.05);
-    --input-border: rgba(255, 255, 255, 0.1);
-    --input-focus-border: #818cf8;
-    --shadow-color: rgba(0, 0, 0, 0.4);
+    --nozom-navy: #071426;
+    --nozom-navy-light: #102541;
+    --nozom-blue: #1478ff;
+    --nozom-cyan: #29c5f6;
+    --nozom-text: #f7fbff;
+    --nozom-muted: #9fb1c8;
+    --nozom-border: rgba(255, 255, 255, 0.12);
+    --nozom-card: rgba(7, 20, 38, 0.76);
 }
 
-/* Override body and page wrapper styles specifically for the login/signup routes */
-body[data-path="login"],
-/* body[data-path="signup"],
-body[data-path="forgot"], */
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: 'Outfit', sans-serif !important;
-    background: radial-gradient(circle at top right, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%) !important;
-    color: var(--text-color) !important;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     margin: 0;
-    padding: 20px;
-    overflow-x: hidden;
+    padding: 0 !important;
+    color: var(--nozom-text) !important;
+    font-family: "Inter", sans-serif !important;
+    background:
+        radial-gradient(
+            circle at 85% 10%,
+            rgba(20, 120, 255, 0.24),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 10% 90%,
+            rgba(41, 197, 246, 0.15),
+            transparent 32%
+        ),
+        linear-gradient(
+            145deg,
+            var(--nozom-navy),
+            var(--nozom-navy-light)
+        ) !important;
 }
 
-/* Ensure navbar/footer are hidden if not overridden in template */
+html[dir="rtl"] body {
+    font-family: "Cairo", sans-serif !important;
+}
+
 .web-header,
-.web-footer {
+.web-footer,
+.navbar,
+footer {
     display: none !important;
 }
 
-/* General Layout Containers */
-section.for-login,
-/* section.for-email-login,
-section.for-signup,
-section.for-forgot, */
-section.for-login-with-email-link {
+.page_content {
     width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    max-width: none !important;
+    padding: 0 !important;
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Glassmorphic Page Card login big box */
-.login-content.page-card {
-    background: var(--card-bg) !important;
-    border: 1px solid var(--card-border) !important;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: 24px !important;
-    box-shadow: 0 20px 40px -5px var(--shadow-color),
-        inset 0 1px 1px 0 rgba(255, 255, 255, 0.15) !important;
-    padding: 60px 40px !important;
-    margin-top: 10px !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.login-content.page-card:hover {
-    box-shadow: 0 30px 60px -10px var(--shadow-color),
-        inset 0 1px 1px 0 rgba(255, 255, 255, 0.25) !important;
-    border-color: rgba(255, 255, 255, 0.2) !important;
-}
-
-/* Head section inside card or above it */
-.page-card-head {
-    text-align: center;
-    margin-bottom: 25px;
-}
-
-.page-card-head h4 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #ffffff;
-    margin-top: 15px;
-    letter-spacing: -0.025em;
-}
-
-.page-card-head h9 {
-    display: inline-block;
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin: 5px 0;
-}
-
-.page-card-head hr {
-    border: 0;
-    height: 1px;
-    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.15), transparent);
-    margin: 15px 0;
-}
-
-/* App Logo Styling */
-.app-logo {
-    max-height: 80px;
-    width: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
-    transition: transform 0.4s ease;
-    margin: 0 auto;
-    display: block;
-}
-
-.whatsapp-logo {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: #25D366;
+.login-shell {
     display: flex;
+    min-height: 100vh;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    z-index: 9999;
-    transition: transform 0.3s ease;
+    padding: 40px;
 }
 
-.whatsapp-logo:hover {
-    transform: scale(1.3);
+.login-layout {
+    display: grid;
+    width: min(1120px, 100%);
+    grid-template-columns: minmax(0, 1fr) minmax(380px, 450px);
+    gap: 80px;
+    align-items: center;
 }
 
-
-.app-logo:hover {
-    transform: scale(1.3);
+.nozom-brand {
+    display: flex;
+    gap: 22px;
+    align-items: center;
 }
 
-/* Form controls / inputs */
-.form-group {
-    margin-bottom: 10px !important;
-    position: relative;
+.nozom-logo-link {
+    display: flex;
+    width: 210px;
+    min-height: 90px;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 24px;
+    border: 1px solid var(--nozom-border);
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s;
 }
 
-.email-field,
-.password-field {
-    position: relative;
+.nozom-logo-link:hover {
+    transform: translateY(-3px);
+}
+
+.nozom-logo {
+    display: block;
     width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.company-system-name {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.company-system-name span {
+    color: var(--nozom-muted);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+.company-system-name strong {
+    overflow: hidden;
+    color: #fff;
+    font-size: 22px;
+    text-overflow: ellipsis;
+}
+
+.brand-message {
+    max-width: 620px;
+    margin-top: 58px;
+}
+
+.brand-kicker {
+    color: var(--nozom-cyan);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.brand-message h1 {
+    margin: 15px 0 0;
+    color: #fff;
+    font-size: clamp(38px, 5vw, 58px);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 1.04;
+}
+
+.brand-message p {
+    max-width: 560px;
+    margin: 20px 0 0;
+    color: var(--nozom-muted);
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.service-provider {
+    display: inline-flex;
+    gap: 7px;
+    align-items: center;
+    margin-top: 34px;
+    color: var(--nozom-muted) !important;
+    font-size: 13px;
+    text-decoration: none !important;
+}
+
+.service-provider strong {
+    color: var(--nozom-cyan);
+}
+
+.login-content.page-card {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 43px !important;
+    border: 1px solid var(--nozom-border) !important;
+    border-radius: 30px !important;
+    background: var(--nozom-card) !important;
+    box-shadow:
+        0 40px 90px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(28px);
+}
+
+.mobile-brand,
+.mobile-service-provider {
+    display: none;
+}
+
+.login-card-heading {
+    margin-bottom: 30px;
+}
+
+.login-card-heading > span {
+    color: var(--nozom-cyan);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+}
+
+.login-card-heading h2 {
+    margin: 9px 0 0;
+    color: #fff;
+    font-size: 31px;
+    font-weight: 700;
+}
+
+.login-card-heading p {
+    margin: 10px 0 0;
+    color: var(--nozom-muted);
+    font-size: 14px;
+}
+
+.form-group {
+    margin-bottom: 16px !important;
+}
+
+.login-field {
+    position: relative;
 }
 
 .form-control {
     width: 100% !important;
-    background-color: var(--input-bg) !important;
-    border: 1px solid var(--input-border) !important;
-    color: #ffffff !important;
-    padding: 14px 16px 14px 44px !important;
-    border-radius: 12px !important;
-    font-size: 0.95rem !important;
-    line-height: 1.5 !important;
-    transition: all 0.25s ease !important;
-    box-sizing: border-box;
+    height: 52px !important;
+    padding: 0 48px !important;
+    border: 1px solid rgba(255, 255, 255, 0.11) !important;
+    border-radius: 15px !important;
+    outline: none !important;
+    color: #fff !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    font-size: 15px !important;
 }
 
 .form-control:focus {
-    background-color: rgba(255, 255, 255, 0.08) !important;
-    border-color: var(--input-focus-border) !important;
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.25) !important;
-    outline: none !important;
+    border-color: var(--nozom-blue) !important;
+    box-shadow: 0 0 0 4px rgba(20, 120, 255, 0.2) !important;
 }
 
 .form-control::placeholder {
-    color: rgba(255, 255, 255, 0.35) !important;
+    color: rgba(226, 232, 240, 0.38) !important;
 }
 
-/* Field Icons styling */
 .field-icon {
     position: absolute;
-    left: 15px;
     top: 50%;
+    left: 17px;
+    color: var(--nozom-muted);
     transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
-    stroke: var(--text-muted);
-    fill: none;
     pointer-events: none;
-    transition: stroke 0.25s ease;
 }
 
-.form-control:focus+.field-icon {
-    stroke: var(--input-focus-border);
-}
-
-/* Show/Hide password toggle */
 .toggle-password {
     position: absolute;
-    right: 15px;
     top: 50%;
+    right: 15px;
+    border: 0;
+    color: var(--nozom-cyan);
+    background: transparent;
+    font-size: 12px;
+    font-weight: 700;
     transform: translateY(-50%);
     cursor: pointer;
-    font-size: 0.8rem;
+}
+
+html[dir="rtl"] .field-icon {
+    right: 17px;
+    left: auto;
+}
+
+html[dir="rtl"] .toggle-password {
+    right: auto;
+    left: 15px;
+}
+
+.forgot-password-message,
+.back-to-login {
+    margin-top: 5px;
+    text-align: end;
+}
+
+.forgot-password-message a,
+.back-to-login a {
+    color: var(--nozom-cyan) !important;
+    font-size: 13px;
     font-weight: 600;
-    color: var(--primary-color) !important;
-    user-select: none;
-    transition: color 0.2s ease;
-}
-
-.toggle-password:hover {
-    color: var(--primary-hover) !important;
-}
-
-/* Forgot Password Message */
-.forgot-password-message {
-    text-align: right;
-    margin-top: 8px;
-    margin-bottom: 24px;
-}
-
-.forgot-password-message a {
-    color: var(--text-muted) !important;
-    font-size: 0.85rem;
-    font-weight: 500;
     text-decoration: none;
-    transition: color 0.2s ease;
 }
 
-.forgot-password-message a:hover {
-    color: var(--primary-color) !important;
-    text-decoration: underline;
-}
-
-/* Page Card Actions / Buttons */
 .page-card-actions {
-    margin-top: 24px;
+    margin-top: 26px;
 }
 
-.btn-primary.btn-login,
-.btn-login {
+.btn-primary,
+.btn-login,
+.btn-forgot {
+    display: flex !important;
     width: 100% !important;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%) !important;
-    border: none !important;
-    color: #ffffff !important;
-    padding: 14px 20px !important;
-    border-radius: 12px !important;
-    font-size: 0.95rem !important;
-    font-weight: 600 !important;
-    letter-spacing: -0.01em;
-    cursor: pointer !important;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3) !important;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-
-.btn-primary.btn-login:hover,
-.btn-login:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45) !important;
-    filter: brightness(1.1);
-}
-
-.btn-primary.btn-login:active,
-.btn-login:active {
-    transform: translateY(0) !important;
-}
-
-/* Sign up and back helper messages */
-.sign-up-message {
-    text-align: center;
-    margin-top: 25px;
-    font-size: 0.9rem;
-    color: var(--text-muted);
-}
-
-.sign-up-message a {
-    color: var(--primary-color) !important;
-    font-weight: 600;
-    text-decoration: none;
-    margin-left: 5px;
-    transition: color 0.2s ease;
-}
-
-.sign-up-message a:hover {
-    color: var(--primary-hover) !important;
-    text-decoration: underline;
-}
-
-/* Social logins (disabled by comments in custom login.html but styled just in case) */
-.social-logins {
-    margin-top: 20px;
-}
-
-.login-divider {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin: 15px 0;
-}
-
-.btn-login-option {
-    background-color: var(--input-bg) !important;
-    border: 1px solid var(--input-border) !important;
-    color: #ffffff !important;
-    border-radius: 12px !important;
-    padding: 12px !important;
-    transition: all 0.2s ease !important;
-}
-
-.btn-login-option:hover {
-    background-color: rgba(255, 255, 255, 0.1) !important;
-    border-color: rgba(255, 255, 255, 0.2) !important;
-}
-
-/* Noscript Warning */
-noscript .text-center {
-    background-color: rgba(239, 68, 68, 0.2);
-    border: 1px solid rgba(239, 68, 68, 0.3);
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-}
-
-/* Subscription Expiry Banner & Countdown */
-.subscription-banner {
-    display: flex;
+    min-height: 51px;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 14px 20px;
-    border-radius: 16px;
-    margin-top: 25px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    font-size: 0.9rem;
-    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
-    animation: fadeInDown 0.5s ease-out;
+    justify-content: center;
+    border: 0 !important;
+    border-radius: 15px !important;
+    color: #fff !important;
+    background:
+        linear-gradient(
+            135deg,
+            var(--nozom-blue),
+            #075bd7
+        ) !important;
+    box-shadow: 0 15px 30px rgba(20, 120, 255, 0.28) !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
 }
 
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
+.subscription-panel {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    max-width: 620px;
+    margin-top: 34px;
+    padding: 16px 18px;
+    border: 1px solid rgba(52, 211, 153, 0.25);
+    border-radius: 18px;
+    background: rgba(16, 185, 129, 0.08);
+}
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.subscription-warning {
+    border-color: rgba(251, 191, 36, 0.3);
+    background: rgba(245, 158, 11, 0.09);
+}
+
+.subscription-blocked {
+    border-color: rgba(248, 113, 113, 0.33);
+    background: rgba(239, 68, 68, 0.1);
 }
 
 .subscription-icon {
     display: flex;
+    width: 28px;
+    height: 28px;
+    flex: 0 0 auto;
     align-items: center;
     justify-content: center;
+    border-radius: 50%;
+    font-weight: 700;
 }
 
-.subscription-info {
+.subscription-details {
+    min-width: 0;
     flex: 1;
+}
+
+.subscription-panel strong {
+    display: block;
+    font-size: 14px;
+}
+
+.subscription-panel p {
+    margin: 3px 0 0;
+    color: var(--nozom-muted);
+    font-size: 13px;
+}
+
+.subscription-days {
+    padding: 6px 11px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.09);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.subscription-source-warning {
+    margin-top: 12px;
+    color: #fcd34d;
+    font-size: 12px;
+}
+
+.nozom-whatsapp {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 1000;
     display: flex;
-    gap: 6px;
+    gap: 9px;
     align-items: center;
-    font-weight: 500;
+    padding: 13px 17px;
+    border-radius: 999px;
+    color: #fff !important;
+    background: #25d366;
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.3);
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none !important;
+    transition: transform 0.2s;
 }
 
-.subscription-label {
-    color: var(--text-muted);
+.nozom-whatsapp:hover {
+    color: #fff !important;
+    transform: translateY(-3px);
 }
 
-.subscription-date {
-    color: #ffffff;
-    font-weight: 600;
+.nozom-brand-compact {
+    display: block;
+    text-align: center;
 }
 
-.subscription-countdown {
-    display: flex;
-    align-items: center;
-}
-
-.countdown-badge {
-    background-color: rgba(99, 102, 241, 0.15);
-    border: 1px solid rgba(99, 102, 241, 0.3);
-    color: #a5b4fc;
-    padding: 4px 10px;
+.nozom-brand-compact .nozom-logo-link {
+    width: 170px;
+    min-height: 70px;
+    margin: 0 auto 20px;
+    padding: 14px 20px;
     border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
 }
 
-/* Status variants */
-.subscription-banner.status-active {
-    border-color: rgba(16, 185, 129, 0.25);
-    background: rgba(16, 185, 129, 0.05);
+.nozom-brand-compact .company-system-name {
+    text-align: center;
 }
 
-.subscription-banner.status-active .subscription-icon {
-    color: #34d399;
+.secondary-view {
+    width: min(450px, 100%);
 }
 
-.subscription-banner.status-active .countdown-badge {
-    background-color: rgba(16, 185, 129, 0.15);
-    border-color: rgba(16, 185, 129, 0.3);
-    color: #34d399;
-}
-
-.subscription-banner.status-warning {
-    border-color: rgba(245, 158, 11, 0.3);
-    background: rgba(245, 158, 11, 0.06);
-    box-shadow: 0 10px 20px -5px rgba(245, 158, 11, 0.15);
-}
-
-.subscription-banner.status-warning .subscription-icon {
-    color: #fbbf24;
-}
-
-.subscription-banner.status-warning .countdown-badge {
-    background-color: rgba(245, 158, 11, 0.18);
-    border-color: rgba(245, 158, 11, 0.4);
-    color: #fbbf24;
-    animation: pulseWarning 2s infinite ease-in-out;
-}
-
-.subscription-banner.status-expired {
-    border-color: rgba(239, 68, 68, 0.35);
-    background: rgba(239, 68, 68, 0.08);
-    box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.2);
-}
-
-.subscription-banner.status-expired .subscription-icon {
-    color: #f87171;
-}
-
-.subscription-banner.status-expired .subscription-date {
-    text-decoration: line-through;
-    color: #f87171;
-}
-
-.subscription-banner.status-expired .countdown-badge.badge-expired {
-    background-color: rgba(239, 68, 68, 0.2);
-    border-color: rgba(239, 68, 68, 0.4);
-    color: #f87171;
-}
-
-@keyframes pulseWarning {
-
-    0%,
-    100% {
-        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.2);
+@media (max-width: 880px) {
+    .login-shell {
+        padding: 24px 16px;
     }
 
-    50% {
-        box-shadow: 0 0 8px 2px rgba(245, 158, 11, 0.4);
+    .login-layout {
+        display: block;
+        max-width: 500px;
+    }
+
+    .brand-panel {
+        display: none;
+    }
+
+    .mobile-brand {
+        display: block;
+        margin-bottom: 30px;
+    }
+
+    .mobile-service-provider {
+        display: block;
+        margin-top: 25px;
+        color: var(--nozom-muted) !important;
+        text-align: center;
+        font-size: 12px;
+        text-decoration: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-shell {
+        align-items: flex-start;
+        padding: 14px 11px 90px;
+    }
+
+    .login-content.page-card {
+        padding: 26px 21px !important;
+        border-radius: 23px !important;
+    }
+
+    .nozom-brand-compact .nozom-logo-link {
+        width: 155px;
+    }
+
+    .login-card-heading h2 {
+        font-size: 27px;
+    }
+
+    .nozom-whatsapp {
+        right: 15px;
+        bottom: 15px;
+        width: 56px;
+        height: 56px;
+        justify-content: center;
+        padding: 0;
+    }
+
+    .nozom-whatsapp span {
+        display: none;
+    }
+}
+
+/* NOZOM login identity corrections */
+.nozom-brand {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.nozom-logo-link {
+    display: flex !important;
+    width: 260px !important;
+    height: 112px !important;
+    min-height: 112px !important;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 20px 26px !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 26px !important;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.98),
+            rgba(235, 244, 255, 0.96)
+        ) !important;
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+.nozom-logo {
+    display: block !important;
+    width: 100% !important;
+    max-width: 215px !important;
+    height: 100% !important;
+    max-height: 75px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    object-fit: contain !important;
+    filter: none !important;
+}
+
+.login-company-name {
+    width: 100%;
+    margin: 16px 0 8px;
+    color: #ffffff;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1.35;
+    text-align: center;
+    letter-spacing: -0.02em;
+}
+
+.login-company-name::after {
+    display: block;
+    width: 46px;
+    height: 3px;
+    margin: 12px auto 0;
+    border-radius: 999px;
+    content: "";
+    background:
+        linear-gradient(
+            90deg,
+            var(--nozom-blue),
+            var(--nozom-cyan)
+        );
+}
+
+.login-card-heading {
+    text-align: center;
+}
+
+.login-card-heading > span {
+    display: block;
+}
+
+.nozom-brand-compact .nozom-logo-link {
+    width: 210px !important;
+    height: 92px !important;
+    min-height: 92px !important;
+    margin: 0 auto 26px !important;
+    padding: 17px 23px !important;
+}
+
+.nozom-brand-compact .nozom-logo {
+    max-width: 175px !important;
+    max-height: 60px !important;
+}
+
+@media (max-width: 880px) {
+    .nozom-brand {
+        justify-content: center;
+    }
+
+    .login-company-name {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nozom-brand-compact .nozom-logo-link {
+        width: 190px !important;
+        height: 84px !important;
+        min-height: 84px !important;
+    }
+
+    .nozom-brand-compact .nozom-logo {
+        max-width: 160px !important;
+        max-height: 54px !important;
+    }
+
+    .login-company-name {
+        font-size: 18px;
+    }
+}
+
+/* Final NOZOM logo placement */
+.nozom-brand,
+.nozom-brand-compact {
+    display: flex !important;
+    width: 100% !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+}
+
+.nozom-logo-link,
+.nozom-brand-compact .nozom-logo-link {
+    display: inline-flex !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 auto 30px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    outline: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transform: none !important;
+}
+
+.nozom-logo-link:hover,
+.nozom-logo-link:focus {
+    border: 0 !important;
+    outline: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    opacity: 0.9;
+    transform: none !important;
+}
+
+.nozom-logo,
+.nozom-brand-compact .nozom-logo {
+    display: block !important;
+    width: min(250px, 70vw) !important;
+    max-width: 250px !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    object-fit: contain !important;
+    filter: none !important;
+}
+
+.mobile-brand {
+    text-align: center !important;
+}
+
+.login-card-heading {
+    text-align: center !important;
+}
+
+@media (max-width: 880px) {
+    .nozom-logo,
+    .nozom-brand-compact .nozom-logo {
+        width: min(225px, 68vw) !important;
+        max-width: 225px !important;
+    }
+
+    .nozom-logo-link,
+    .nozom-brand-compact .nozom-logo-link {
+        margin-bottom: 25px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .nozom-logo,
+    .nozom-brand-compact .nozom-logo {
+        width: min(205px, 67vw) !important;
+        max-width: 205px !important;
+    }
+
+    .nozom-logo-link,
+    .nozom-brand-compact .nozom-logo-link {
+        margin-bottom: 22px !important;
+    }
+}
+
+/* Old WhatsApp button retained for NOZOM support */
+.whatsapp-logo {
+    position: fixed !important;
+    right: 20px !important;
+    bottom: 20px !important;
+    z-index: 2147483647 !important;
+    display: flex !important;
+    width: 60px !important;
+    height: 60px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    outline: 0 !important;
+    color: #ffffff !important;
+    background-color: #25d366 !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+    text-decoration: none !important;
+    transition: transform 0.3s ease !important;
+}
+
+.whatsapp-logo:hover {
+    color: #ffffff !important;
+    background-color: #25d366 !important;
+    transform: scale(1.3) !important;
+}
+
+.whatsapp-logo img {
+    display: block !important;
+    width: 35px !important;
+    height: 35px !important;
+    max-width: none !important;
+    pointer-events: none !important;
+}
+
+/*
+ * Prevent buttons and widgets injected by Frappe apps
+ * from appearing on the public login page.
+ * The NOZOM WhatsApp button remains visible.
+ */
+.nozom-login-page .chat-bubble,
+.nozom-login-page .chat-widget,
+.nozom-login-page .chat-widget-container,
+.nozom-login-page .chat-app,
+.nozom-login-page .chat-app-container,
+.nozom-login-page .frappe-chat,
+.nozom-login-page .frappe-chat-container,
+.nozom-login-page .frappe-chat-room,
+.nozom-login-page .website-chat,
+.nozom-login-page .website-chat-widget,
+.nozom-login-page .chat-support,
+.nozom-login-page .chat-support-widget,
+.nozom-login-page .support-widget,
+.nozom-login-page .help-widget,
+.nozom-login-page .help-button,
+.nozom-login-page .floating-button,
+.nozom-login-page .floating-action-button,
+.nozom-login-page .floating-widget,
+.nozom-login-page .widget-button,
+.nozom-login-page .widget-container,
+.nozom-login-page .intercom-lightweight-app,
+.nozom-login-page .crisp-client,
+.nozom-login-page .tawk-min-container,
+.nozom-login-page #chat-widget,
+.nozom-login-page #chat-container,
+.nozom-login-page #frappe-chat,
+.nozom-login-page #website-chat,
+.nozom-login-page #support-widget,
+.nozom-login-page [data-chat-widget],
+.nozom-login-page [data-widget="chat"],
+.nozom-login-page [data-app-widget],
+.nozom-login-page iframe[src*="chat"],
+.nozom-login-page iframe[src*="support"],
+.nozom-login-page iframe[title*="chat" i],
+.nozom-login-page iframe[title*="support" i] {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+}
+
+@media (max-width: 480px) {
+    .whatsapp-logo {
+        right: 15px !important;
+        bottom: 15px !important;
+        width: 60px !important;
+        height: 60px !important;
+    }
+}
+
+/* Final spacing and mobile layout adjustments */
+
+.nozom-logo-link,
+.nozom-brand-compact .nozom-logo-link {
+    margin-bottom: 12px !important;
+}
+
+.mobile-brand {
+    margin-bottom: 8px !important;
+}
+
+.login-card-heading {
+    margin-top: 0 !important;
+    margin-bottom: 24px !important;
+}
+
+.login-card-heading > span {
+    margin-top: 0 !important;
+}
+
+.login-card-heading h2 {
+    margin-top: 6px !important;
+}
+
+.login-company-name {
+    margin-top: 10px !important;
+    margin-bottom: 6px !important;
+}
+
+.login-company-name::after {
+    margin-top: 9px !important;
+}
+
+.login-card-heading p {
+    margin-top: 8px !important;
+}
+
+.login-content.page-card {
+    padding-top: 34px !important;
+    padding-bottom: 34px !important;
+}
+
+.nozom-brand-compact .nozom-logo {
+    width: min(215px, 62vw) !important;
+    max-width: 215px !important;
+}
+
+@media (max-width: 880px) {
+    body {
+        overflow-x: hidden !important;
+    }
+
+    .login-shell {
+        width: 100% !important;
+        min-height: 100dvh !important;
+        padding: 14px !important;
+        align-items: center !important;
+    }
+
+    .login-layout {
+        width: 100% !important;
+        max-width: 460px !important;
+        margin: 0 auto !important;
+    }
+
+    .login-content.page-card {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 26px 24px !important;
+        border-radius: 22px !important;
+    }
+
+    .mobile-brand {
+        margin-bottom: 4px !important;
+    }
+
+    .nozom-brand-compact .nozom-logo-link {
+        margin-bottom: 10px !important;
+    }
+
+    .nozom-brand-compact .nozom-logo {
+        width: min(205px, 58vw) !important;
+        max-width: 205px !important;
+    }
+
+    .login-card-heading {
+        margin-bottom: 21px !important;
+    }
+
+    .login-card-heading h2 {
+        font-size: 27px !important;
+    }
+
+    .login-company-name {
+        margin-top: 8px !important;
+        font-size: 20px !important;
+    }
+
+    .form-group {
+        margin-bottom: 13px !important;
+    }
+
+    .page-card-actions {
+        margin-top: 21px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    html,
+    body {
+        width: 100% !important;
+        min-height: 100% !important;
+        overflow-x: hidden !important;
+    }
+
+    .login-shell {
+        width: 100% !important;
+        min-height: 100dvh !important;
+        padding:
+            max(8px, env(safe-area-inset-top))
+            8px
+            max(78px, calc(env(safe-area-inset-bottom) + 68px))
+            8px !important;
+        align-items: flex-start !important;
+    }
+
+    .login-layout {
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    .login-content.page-card {
+        width: 100% !important;
+        padding: 22px 17px 24px !important;
+        border-radius: 18px !important;
+    }
+
+    .mobile-brand {
+        margin-bottom: 0 !important;
+    }
+
+    .nozom-brand-compact .nozom-logo-link {
+        margin-bottom: 7px !important;
+    }
+
+    .nozom-brand-compact .nozom-logo {
+        width: min(190px, 56vw) !important;
+        max-width: 190px !important;
+    }
+
+    .login-card-heading {
+        margin-bottom: 18px !important;
+    }
+
+    .login-card-heading > span {
+        font-size: 10px !important;
+    }
+
+    .login-card-heading h2 {
+        margin-top: 4px !important;
+        font-size: 25px !important;
+    }
+
+    .login-company-name {
+        margin: 7px auto 4px !important;
+        font-size: 18px !important;
+        line-height: 1.3 !important;
+    }
+
+    .login-company-name::after {
+        width: 42px !important;
+        height: 2px !important;
+        margin-top: 8px !important;
+    }
+
+    .login-card-heading p {
+        margin-top: 7px !important;
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+    }
+
+    .form-control {
+        height: 49px !important;
+    }
+
+    .forgot-password-message {
+        margin-top: 2px !important;
+        margin-bottom: 0 !important;
+    }
+
+    .page-card-actions {
+        margin-top: 18px !important;
+    }
+
+    .btn-login,
+    .btn-primary,
+    .btn-forgot {
+        min-height: 48px !important;
+    }
+
+    .mobile-service-provider {
+        margin-top: 18px !important;
+    }
+
+    .whatsapp-logo {
+        right: 12px !important;
+        bottom: 12px !important;
+        width: 54px !important;
+        height: 54px !important;
+    }
+
+    .whatsapp-logo img {
+        width: 31px !important;
+        height: 31px !important;
+    }
+}
+
+@media (max-width: 360px) {
+    .login-shell {
+        padding-right: 6px !important;
+        padding-left: 6px !important;
+    }
+
+    .login-content.page-card {
+        padding-right: 14px !important;
+        padding-left: 14px !important;
+    }
+
+    .nozom-brand-compact .nozom-logo {
+        width: min(175px, 55vw) !important;
+    }
+
+    .login-card-heading h2 {
+        font-size: 23px !important;
+    }
+
+    .login-company-name {
+        font-size: 17px !important;
     }
 }
