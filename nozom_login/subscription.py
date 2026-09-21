@@ -226,7 +226,7 @@ def get_nozom_status():
 				"application/json",
 
 			"User-Agent":
-				"NOZOM-loginscr/1.0",
+				"NOZOM-Login/1.0",
 		},
 		method="GET",
 	)

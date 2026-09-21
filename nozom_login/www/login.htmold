@@ -54,12 +54,12 @@
 
 {% block head_include %}
 {{ include_style('login.bundle.css') }}
-<link rel="stylesheet" href="/assets/loginscr/css/loginscr.css?v={{ range(1, 1000) | random }}">
+<link rel="stylesheet" href="/assets/nozom_login/css/nozom_login.css?v={{ range(1, 1000) | random }}">
 {% endblock %}
 
 {% macro logo_section(title=null) %}
 <div class="page-card-head">
-    <img class="app-logo" src="/assets/loginscr/images/app_logo.png">
+    <img class="app-logo" src="/assets/nozom_login/images/app_logo.png">
     {% if title %}
     <h4>{{ _(title)}}</h4>
     {% else %}
@@ -117,7 +117,7 @@
 
             <div class="page-card-head">
                 <!-- down image for milenyum 
-                        <img class="app-logo" src="/assets/loginscr/images/milo_logo.png">
+                        <img class="app-logo" src="/assets/nozom_login/images/milo_logo.png">
                         <br>
                         -->
                 <!-- <h9>{{ _("By Haitham Salama") }}</h9>

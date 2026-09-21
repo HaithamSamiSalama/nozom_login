@@ -5,7 +5,7 @@ from frappe.utils import today, getdate, date_diff
 from urllib.parse import urljoin, urlparse
 
 import frappe
-from loginscr.subscription import get_subscription_status
+from nozom_login.subscription import get_subscription_status
 import frappe.utils
 from frappe import _
 from frappe.apps import get_default_path
@@ -191,7 +191,7 @@ def get_context(context):
 	)
 
 	context["nozom_logo"] = (
-		"/assets/loginscr/images/nozom-logo.png"
+		"/assets/nozom_login/images/nozom-logo.png"
 	)
 
 	context["nozom_website"] = (
@@ -282,7 +282,7 @@ def get_context(context):
 
 	context["login_logo"] = (
 		context["company_logo"]
-		or "/assets/loginscr/images/app_logo.png"
+		or "/assets/nozom_login/images/app_logo.png"
 	)
 
 	return context

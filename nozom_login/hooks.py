@@ -1,12 +1,12 @@
-app_name = "loginscr"
-app_title = "Loginscr"
+app_name = "nozom_login"
+app_title = "NOZOM Login"
 app_publisher = "Haitham Salama"
 app_description = "login screen for ERP of Milenyum"
 app_email = "admin@milenyum.ae"
 app_license = "mit"
 
-##loginscr scc
-####web_include_css = "/assets/loginscr/css/loginscr.css"
+## NOZOM Login CSS
+####web_include_css = "/assets/nozom_login/css/nozom_login.css"
 
 website_route_rules = [
     {"from_route": "/login", "to_route": "login"},
@@ -21,11 +21,11 @@ website_route_rules = [
 # Each item in the list will be shown as an app in the apps page
 # add_to_apps_screen = [
 # 	{
-# 		"name": "loginscr",
-# 		"logo": "/assets/loginscr/logo.png",
-# 		"title": "Loginscr",
-# 		"route": "/loginscr",
-# 		"has_permission": "loginscr.api.permission.has_app_permission"
+# 		"name": "nozom_login",
+# 		"logo": "/assets/nozom_login/logo.png",
+# 		"title": "NOZOM Login",
+# 		"route": "/nozom_login",
+# 		"has_permission": "nozom_login.api.permission.has_app_permission"
 # 	}
 # ]
 
@@ -33,18 +33,18 @@ website_route_rules = [
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/loginscr/css/loginscr.css"
-# app_include_js = "/assets/loginscr/js/loginscr.js"
+# app_include_css = "/assets/nozom_login/css/nozom_login.css"
+# app_include_js = "/assets/nozom_login/js/nozom_login.js"
 
 # include js, css files in header of web template
-#web_include_css = "/assets/loginscr/css/loginscr.css"
+#web_include_css = "/assets/nozom_login/css/nozom_login.css"
 
 
 
-# web_include_js = "/assets/loginscr/js/loginscr.js"
+# web_include_js = "/assets/nozom_login/js/nozom_login.js"
 
 # include custom scss in every website theme (without file extension ".scss")
-# website_theme_scss = "loginscr/public/scss/website"
+# website_theme_scss = "nozom_login/public/scss/website"
 
 # include js, css files in header of web form
 # webform_include_js = {"doctype": "public/js/doctype.js"}
@@ -62,7 +62,7 @@ website_route_rules = [
 # Svg Icons
 # ------------------
 # include app icons in desk
-# app_include_icons = "loginscr/public/icons.svg"
+# app_include_icons = "nozom_login/public/icons.svg"
 
 # Home Pages
 # ----------
@@ -89,43 +89,43 @@ website_route_rules = [
 
 # add methods and filters to jinja environment
 # jinja = {
-# 	"methods": "loginscr.utils.jinja_methods",
-# 	"filters": "loginscr.utils.jinja_filters"
+# 	"methods": "nozom_login.utils.jinja_methods",
+# 	"filters": "nozom_login.utils.jinja_filters"
 # }
 
 # Installation
 # ------------
 
-# before_install = "loginscr.install.before_install"
-# after_install = "loginscr.install.after_install"
+# before_install = "nozom_login.install.before_install"
+# after_install = "nozom_login.install.after_install"
 
 # Uninstallation
 # ------------
 
-# before_uninstall = "loginscr.uninstall.before_uninstall"
-# after_uninstall = "loginscr.uninstall.after_uninstall"
+# before_uninstall = "nozom_login.uninstall.before_uninstall"
+# after_uninstall = "nozom_login.uninstall.after_uninstall"
 
 # Integration Setup
 # ------------------
 # To set up dependencies/integrations with other apps
 # Name of the app being installed is passed as an argument
 
-# before_app_install = "loginscr.utils.before_app_install"
-# after_app_install = "loginscr.utils.after_app_install"
+# before_app_install = "nozom_login.utils.before_app_install"
+# after_app_install = "nozom_login.utils.after_app_install"
 
 # Integration Cleanup
 # -------------------
 # To clean up dependencies/integrations with other apps
 # Name of the app being uninstalled is passed as an argument
 
-# before_app_uninstall = "loginscr.utils.before_app_uninstall"
-# after_app_uninstall = "loginscr.utils.after_app_uninstall"
+# before_app_uninstall = "nozom_login.utils.before_app_uninstall"
+# after_app_uninstall = "nozom_login.utils.after_app_uninstall"
 
 # Desk Notifications
 # ------------------
 # See frappe.core.notifications.get_notification_config
 
-# notification_config = "loginscr.notifications.get_notification_config"
+# notification_config = "nozom_login.notifications.get_notification_config"
 
 # Permissions
 # -----------
@@ -156,47 +156,47 @@ website_route_rules = [
 
 # scheduler_events = {
 # 	"all": [
-# 		"loginscr.tasks.all"
+# 		"nozom_login.tasks.all"
 # 	],
 # 	"daily": [
-# 		"loginscr.tasks.daily"
+# 		"nozom_login.tasks.daily"
 # 	],
 # 	"hourly": [
-# 		"loginscr.tasks.hourly"
+# 		"nozom_login.tasks.hourly"
 # 	],
 # 	"weekly": [
-# 		"loginscr.tasks.weekly"
+# 		"nozom_login.tasks.weekly"
 # 	],
 # 	"monthly": [
-# 		"loginscr.tasks.monthly"
+# 		"nozom_login.tasks.monthly"
 # 	],
 # }
 
 # Testing
 # -------
 
-# before_tests = "loginscr.install.before_tests"
+# before_tests = "nozom_login.install.before_tests"
 
 # Extend DocType Class
 # ------------------------------
 #
 # Specify custom mixins to extend the standard doctype controller.
 # extend_doctype_class = {
-# 	"Task": "loginscr.custom.task.CustomTaskMixin"
+# 	"Task": "nozom_login.custom.task.CustomTaskMixin"
 # }
 
 # Overriding Methods
 # ------------------------------
 #
 # override_whitelisted_methods = {
-# 	"frappe.desk.doctype.event.event.get_events": "loginscr.event.get_events"
+# 	"frappe.desk.doctype.event.event.get_events": "nozom_login.event.get_events"
 # }
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
 # along with any modifications made in other Frappe apps
 # override_doctype_dashboards = {
-# 	"Task": "loginscr.task.get_dashboard_data"
+# 	"Task": "nozom_login.task.get_dashboard_data"
 # }
 
 # exempt linked doctypes from being automatically cancelled
@@ -210,13 +210,13 @@ website_route_rules = [
 
 # Request Events
 # ----------------
-# before_request = ["loginscr.utils.before_request"]
-# after_request = ["loginscr.utils.after_request"]
+# before_request = ["nozom_login.utils.before_request"]
+# after_request = ["nozom_login.utils.after_request"]
 
 # Job Events
 # ----------
-# before_job = ["loginscr.utils.before_job"]
-# after_job = ["loginscr.utils.after_job"]
+# before_job = ["nozom_login.utils.before_job"]
+# after_job = ["nozom_login.utils.after_job"]
 
 # User Data Protection
 # --------------------
@@ -246,7 +246,7 @@ website_route_rules = [
 # --------------------------------
 
 # auth_hooks = [
-# 	"loginscr.auth.validate"
+# 	"nozom_login.auth.validate"
 # ]
 
 # Automatically update python controller files with type annotations for this app.

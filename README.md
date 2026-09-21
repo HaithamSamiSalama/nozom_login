@@ -1,4 +1,4 @@
-### Loginscr
+### NOZOM Login
 
 Login Screen For ERP by Haitham Sami Salama
 
@@ -8,8 +8,8 @@ You can install this app using the [bench](https://github.com/frappe/bench) CLI:
 
 ```bash
 cd frappe-bench
-bench get-app https://github.com/haithamsamisalama/loginscr.git
-bench install-app loginscr
+bench get-app https://github.com/haithamsamisalama/nozom_login.git
+bench install-app nozom_login
 ```
 
 ### Contributing
@@ -17,7 +17,7 @@ bench install-app loginscr
 This app uses `pre-commit` for code formatting and linting. Please [install pre-commit](https://pre-commit.com/#installation) and enable it for this repository:
 
 ```bash
-cd apps/loginscr
+cd apps/nozom_login
 pre-commit install
 ```
 

@@ -1,5 +1,5 @@
 [project]
-name = "loginscr"
+name = "nozom_login"
 authors = [
     { name = "Haitham Salama", email = "admin@milenyum.ae"}
 ]
