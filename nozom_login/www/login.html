@@ -31,7 +31,18 @@
 {% endmacro %}
 
 {% macro subscription_panel() %}
-{% if subscription_blocked %}
+
+{% if subscription_provider == "local_development" %}
+
+<div class="subscription-panel subscription-development" role="status">
+    <div class="subscription-icon">DEV</div>
+    <div>
+        <strong>{{ _("DEVELOPMENT ENVIRONMENT") }}</strong>
+        <p>{{ _("NO SUBSCRIPTION VALIDITY") }}</p>
+    </div>
+</div>
+
+{% elif subscription_blocked %}
 <div class="subscription-panel subscription-blocked" role="alert">
     <div class="subscription-icon">!</div>
 

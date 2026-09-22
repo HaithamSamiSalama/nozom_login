@@ -314,15 +314,66 @@ def get_nozom_status():
 		return result
 
 
-def get_subscription_status():
-	provider = (
-		frappe.conf.get(
-			"subscription_provider"
+DEV_SECRET_HASH = "6860c524d83f0d87fc5a424a4bab585d691448deec6b5fac33034ec2aa0bffa3"
+
+
+def _get_local_development_status():
+	if not frappe.conf.get("developer_mode"):
+		return None
+
+	try:
+		data_txt_path = frappe.get_site_path("data.txt")
+
+		import os
+
+		if not os.path.exists(data_txt_path):
+			return None
+
+		with open(
+			data_txt_path,
+			"r",
+			encoding="utf-8",
+		) as file:
+			secret = file.read().strip()
+
+		if not secret:
+			return None
+
+		secret_hash = hashlib.sha256(
+			secret.encode("utf-8")
+		).hexdigest()
+
+		if not hmac.compare_digest(
+			secret_hash,
+			DEV_SECRET_HASH,
+		):
+			return None
+
+		return {
+			"provider": "local_development",
+			"status": "ACTIVE",
+			"expiry_date": None,
+			"remaining_days": None,
+			"blocked": False,
+			"source_available": True,
+			"message": (
+				"Development environment - "
+				"subscription validation is disabled."
+			),
+		}
+
+	except Exception:
+		frappe.log_error(
+			title="Local Development Check Error",
+			message=frappe.get_traceback(),
 		)
-		or "legacy_file"
-	)
+		return None
 
-	if provider == "nozom":
-		return get_nozom_status()
 
-	return get_legacy_file_status()
+def get_subscription_status():
+	development_status = _get_local_development_status()
+
+	if development_status:
+		return development_status
+
+	return get_nozom_status()
