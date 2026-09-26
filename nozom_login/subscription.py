@@ -14,7 +14,7 @@ NOZOM_STATUS_URL = (
 	"api/internal/subscriptions/site-status"
 )
 
-CACHE_SECONDS = 15 * 60
+CACHE_SECONDS = 60
 REQUEST_TIMEOUT_SECONDS = 6
 
 
@@ -254,11 +254,33 @@ def get_nozom_status():
 			else None
 		)
 
+		raw_status = (
+			payload.get("status")
+			or "UNKNOWN"
+		)
+		raw_blocked = bool(
+			payload.get(
+				"blocked",
+				False,
+			)
+		)
+
+		status = raw_status
+		blocked = raw_blocked
+
+		# The actual expiry date is authoritative for expiry.
+		# This also handles an admin extension where the central
+		# stored status has not yet changed from EXPIRED.
+		if expiry_date:
+			if remaining_days is not None and remaining_days < 0:
+				status = "EXPIRED"
+				blocked = True
+			elif raw_status == "EXPIRED":
+				status = "ACTIVE"
+				blocked = False
+
 		result.update({
-			"status":
-				payload.get(
-					"status"
-				) or "UNKNOWN",
+			"status": status,
 
 			"expiry_date":
 				_format_legacy_date(
@@ -268,13 +290,7 @@ def get_nozom_status():
 			"remaining_days":
 				remaining_days,
 
-			"blocked":
-				bool(
-					payload.get(
-						"blocked",
-						False,
-					)
-				),
+			"blocked": blocked,
 
 			"message":
 				payload.get("message"),
@@ -370,10 +386,44 @@ def _get_local_development_status():
 		return None
 
 
+def _core_is_available():
+	try:
+		return "nozom_core" in frappe.get_installed_apps()
+	except Exception:
+		return False
+
+
 def get_subscription_status():
+	"""
+	Compatibility adapter.
+
+	Managed NOZOM systems use nozom_core as the subscription
+	source of truth. Sites without nozom_core preserve the
+	previous nozom_login subscription behaviour.
+	"""
+	if _core_is_available():
+		from nozom_core.entitlements.subscription import (
+			get_subscription_status as get_core_subscription_status,
+		)
+
+		return get_core_subscription_status()
+
 	development_status = _get_local_development_status()
 
 	if development_status:
 		return development_status
 
 	return get_nozom_status()
+
+
+def clear_subscription_cache():
+	"""Clear the appropriate subscription cache."""
+	if _core_is_available():
+		from nozom_core.entitlements.subscription import (
+			clear_subscription_cache as clear_core_subscription_cache,
+		)
+
+		clear_core_subscription_cache()
+		return
+
+	frappe.cache.delete_value(_cache_key())
