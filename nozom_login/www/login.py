@@ -185,6 +185,18 @@ def get_context(context):
 		or _("Company System")
 	)
 
+	# Canonical login locale for NOZOM online-user-limit messaging.
+	# Prefer the site/page language already selected for this request.
+	lang = str(
+		frappe.local.lang or "en"
+	).lower()
+
+	context["login_locale"] = (
+		"ar"
+		if lang.startswith("ar")
+		else "en"
+	)
+
 	context["is_nozom_site"] = (
 		subscription_status.get("provider")
 		== "nozom"

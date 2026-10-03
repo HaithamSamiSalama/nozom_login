@@ -1018,3 +1018,32 @@ html[dir="rtl"] .toggle-password {
         font-size: 17px !important;
     }
 }
+
+.nozom-online-user-limit-message {
+    margin: 14px 0 0;
+    padding: 12px 14px;
+    border: 1px solid rgba(255, 120, 120, 0.35);
+    border-radius: 12px;
+    background: rgba(120, 24, 32, 0.35);
+    color: #ffe8ea;
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.nozom-online-user-limit-message[hidden] {
+    display: none !important;
+}
+
+.nozom-online-user-limit-line {
+    margin: 0;
+}
+
+.nozom-online-user-limit-line + .nozom-online-user-limit-line {
+    margin-top: 8px;
+}
+
+.nozom-online-user-limit-link {
+    color: #7dd3fc !important;
+    font-weight: 600;
+    text-decoration: underline;
+}

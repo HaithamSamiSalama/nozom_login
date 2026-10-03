@@ -250,6 +250,13 @@
                 {{ login_fields() }}
             </form>
 
+            <div
+                id="nozom-online-user-limit-message"
+                class="nozom-online-user-limit-message"
+                role="alert"
+                hidden
+            ></div>
+
             <a
                 class="mobile-service-provider"
                 href="https://nozom.cloud"
@@ -326,10 +333,35 @@
     {% include "templates/includes/login/login.js" %}
 </script>
 
+<script src="/assets/nozom_login/js/online_user_limit_login.js?v=1"></script>
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const blocked =
         {{ "true" if subscription_blocked else "false" }};
+
+    const loginLocale =
+        {{ (login_locale or "en") | tojson }};
+
+    const loginButtonLabel =
+        {{ _("Login") | tojson }};
+
+    if (
+        window.NozomOnlineUserLimitLogin &&
+        window.login &&
+        login.login_handlers
+    ) {
+        NozomOnlineUserLimitLogin.wrapLoginHandlers(
+            login,
+            {
+                locale: loginLocale,
+                loginButtonLabel: loginButtonLabel,
+                container: document.getElementById(
+                    "nozom-online-user-limit-message"
+                )
+            }
+        );
+    }
 
     document
         .querySelectorAll(".toggle-password")
