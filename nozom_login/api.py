@@ -221,3 +221,34 @@ def get_setup_status(
 		"site":
 			frappe.local.site,
 	}
+
+
+@frappe.whitelist(
+	allow_guest=True,
+	methods=["GET"],
+)
+def get_session_monitoring(
+	timestamp: str,
+	signature: str,
+):
+	"""
+	Trusted Cloud → site read-only monitoring.
+
+	Authenticated with the same HMAC used by get_setup_status
+	(nozom_sso_secret / site:timestamp). Never expose SIDs or secrets.
+	"""
+
+	if not _verify_nozom_request(
+		timestamp,
+		signature,
+	):
+		frappe.throw(
+			_("Not permitted"),
+			frappe.PermissionError,
+		)
+
+	from nozom_core.sessions.monitoring import (
+		build_session_monitoring_payload,
+	)
+
+	return build_session_monitoring_payload()
