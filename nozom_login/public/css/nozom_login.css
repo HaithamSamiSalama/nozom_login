@@ -57,11 +57,23 @@ footer {
 }
 
 .login-shell {
+    position: relative;
     display: flex;
     min-height: 100vh;
     align-items: center;
     justify-content: center;
     padding: 40px;
+}
+
+.nozom-login-topbar {
+    position: absolute;
+    top: 0;
+    inset-inline-end: 0;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 14px 16px;
 }
 
 .login-layout {
@@ -127,7 +139,7 @@ footer {
 
 .brand-message {
     max-width: 620px;
-    margin-top: 58px;
+    margin-top: 28px;
 }
 
 .brand-kicker {
@@ -213,16 +225,40 @@ footer {
     font-size: 14px;
 }
 
+/* Override Frappe login.bundle.css form { max-width: 320px } so fields fill the card. */
+.for-login .login-content.page-card form,
+.for-forgot .login-content.page-card form {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+}
+
+.for-login .login-content.page-card .page-card-body,
+.for-forgot .login-content.page-card .page-card-body,
+.for-login .login-content.page-card .page-card-actions,
+.for-forgot .login-content.page-card .page-card-actions,
+.for-login .login-content.page-card .form-group,
+.for-forgot .login-content.page-card .form-group,
+.for-login .login-content.page-card .login-field,
+.for-forgot .login-content.page-card .login-field {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
 .form-group {
     margin-bottom: 16px !important;
 }
 
 .login-field {
     position: relative;
+    width: 100%;
 }
 
 .form-control {
+    box-sizing: border-box !important;
     width: 100% !important;
+    max-width: 100% !important;
     height: 52px !important;
     padding: 0 48px !important;
     border: 1px solid rgba(255, 255, 255, 0.11) !important;
@@ -231,6 +267,42 @@ footer {
     color: #fff !important;
     background: rgba(255, 255, 255, 0.06) !important;
     font-size: 15px !important;
+}
+
+html[dir="rtl"] .login-field .form-control {
+    text-align: right;
+}
+
+.nozom-login-lang-toggle {
+    display: inline-flex;
+    height: 40px;
+    align-items: center;
+    gap: 6px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 999px;
+    color: var(--nozom-muted);
+    background: transparent;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+}
+
+.nozom-login-lang-toggle:hover,
+.nozom-login-lang-toggle:focus-visible {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    outline: none;
+}
+
+.nozom-login-lang-icon {
+    flex-shrink: 0;
+    opacity: 0.9;
+}
+
+.nozom-login-lang-text {
+    line-height: 1;
 }
 
 .form-control:focus {
@@ -1016,6 +1088,24 @@ html[dir="rtl"] .toggle-password {
 
     .login-company-name {
         font-size: 17px !important;
+    }
+}
+
+@media (max-width: 880px) {
+    .nozom-login-topbar {
+        padding: 10px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nozom-login-topbar {
+        padding: 8px 10px;
+    }
+
+    .nozom-login-lang-toggle {
+        height: 36px;
+        padding: 0 10px;
+        font-size: 11px;
     }
 }
 

@@ -19,7 +19,8 @@
         href="https://nozom.cloud"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Open NOZOM Cloud"
+        title="{{ _('Open NOZOM Cloud') }}"
+        aria-label="{{ _('Open NOZOM Cloud') }}"
     >
         <img
             class="nozom-logo"
@@ -28,6 +29,38 @@
         >
     </a>
 </div>
+{% endmacro %}
+
+{% macro language_switcher() %}
+{# Matches nozom.cloud header pattern: globe + label for the other language. #}
+{% set next_lang = "ar" if login_locale == "en" else "en" %}
+{% set lang_label = _("Switch to Arabic") if login_locale == "en" else _("Switch to English") %}
+{% set lang_text = "العربية" if login_locale == "en" else "English" %}
+<button
+    type="button"
+    class="nozom-login-lang-toggle"
+    data-lang="{{ next_lang }}"
+    title="{{ lang_label }}"
+    aria-label="{{ lang_label }}"
+>
+    <svg
+        class="nozom-login-lang-icon"
+        width="17"
+        height="17"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+    >
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M2 12h20"></path>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+    </svg>
+    <span class="nozom-login-lang-text">{{ lang_text }}</span>
+</button>
 {% endmacro %}
 
 {% macro subscription_panel() %}
@@ -62,7 +95,7 @@
 </div>
 
 {% elif expiry_date and remaining_days is not none and remaining_days <= 60 %}
-<div class="subscription-panel {% if remaining_days < 30 %}subscription-warning{% else %}subscription-active{% endif %}">
+<div class="subscription-panel {% if show_remaining_days %}subscription-warning{% else %}subscription-active{% endif %}">
     <div class="subscription-icon">
         <svg
             width="20"
@@ -85,9 +118,11 @@
         <p>{{ _("Expires on {0}").format(expiry_date) }}</p>
     </div>
 
+    {% if show_remaining_days and remaining_days_label %}
     <span class="subscription-days">
-        {{ remaining_days }} {{ _("days") }}
+        {{ remaining_days_label }}
     </span>
+    {% endif %}
 </div>
 {% endif %}
 
@@ -197,6 +232,10 @@
 
 {% block page_content %}
 <main class="login-shell">
+    <div class="nozom-login-topbar">
+        {{ language_switcher() }}
+    </div>
+
     <section class="for-login login-layout">
         <div class="brand-panel">
             {{ nozom_brand() }}
@@ -362,6 +401,23 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         );
     }
+
+    // Use Frappe's Guest preferred_language cookie (see website.js / translate.py).
+    document
+        .querySelectorAll(".nozom-login-lang-toggle")
+        .forEach(function (button) {
+            button.addEventListener("click", function () {
+                const lang = button.getAttribute("data-lang");
+
+                if (!lang || lang === loginLocale) {
+                    return;
+                }
+
+                document.cookie =
+                    "preferred_language=" + encodeURIComponent(lang);
+                window.location.reload();
+            });
+        });
 
     document
         .querySelectorAll(".toggle-password")

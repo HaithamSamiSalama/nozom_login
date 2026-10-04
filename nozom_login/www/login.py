@@ -136,17 +136,38 @@ def get_context(context):
 		subscription_status.get("expiry_date")
 	)
 
-	context["remaining_days"] = (
-		subscription_status.get("remaining_days")
-	)
+	remaining_days = subscription_status.get("remaining_days")
+	context["remaining_days"] = remaining_days
 
 	context["subscription_blocked"] = bool(
 		subscription_status.get("blocked")
 	)
 
-	context["subscription_message"] = (
-		subscription_status.get("message")
-	)
+	# Presentation only: countdown is shown at 30 days or fewer.
+	# Uses the existing remaining_days value from get_subscription_status().
+	show_remaining_days = False
+	remaining_days_label = None
+
+	if (
+		remaining_days is not None
+		and not context["subscription_blocked"]
+	):
+		try:
+			days_left = int(remaining_days)
+		except (TypeError, ValueError):
+			days_left = None
+
+		if days_left is not None and days_left <= 30:
+			show_remaining_days = True
+			if days_left == 1:
+				remaining_days_label = _("1 day remaining")
+			else:
+				remaining_days_label = _("{0} days remaining").format(
+					days_left
+				)
+
+	context["show_remaining_days"] = show_remaining_days
+	context["remaining_days_label"] = remaining_days_label
 
 	context["subscription_source_available"] = (
 		subscription_status.get(
@@ -155,6 +176,35 @@ def get_context(context):
 		)
 	)
 
+	# Canonical login locale for messaging and language switcher.
+	# Prefer the site/page language already selected for this request.
+	lang = str(
+		frappe.local.lang or "en"
+	).lower()
+
+	login_locale = (
+		"ar"
+		if lang.startswith("ar")
+		else "en"
+	)
+
+	context["login_locale"] = login_locale
+
+	# Prefer Arabic provider copy when the login page is Arabic.
+	subscription_message = subscription_status.get("message")
+	subscription_message_ar = subscription_status.get("message_ar")
+
+	if (
+		login_locale == "ar"
+		and subscription_message_ar
+	):
+		context["subscription_message"] = (
+			subscription_message_ar
+		)
+	else:
+		context["subscription_message"] = (
+			subscription_message
+		)
 
 	# Company name is displayed as text only.
 	# NOZOM identity and logo remain fixed.
@@ -183,18 +233,6 @@ def get_context(context):
 		company_name
 		or context.get("app_name")
 		or _("Company System")
-	)
-
-	# Canonical login locale for NOZOM online-user-limit messaging.
-	# Prefer the site/page language already selected for this request.
-	lang = str(
-		frappe.local.lang or "en"
-	).lower()
-
-	context["login_locale"] = (
-		"ar"
-		if lang.startswith("ar")
-		else "en"
 	)
 
 	context["is_nozom_site"] = (
