@@ -252,3 +252,129 @@ def get_session_monitoring(
 	)
 
 	return build_session_monitoring_payload()
+
+
+def _resolve_chart_of_accounts(country: str, supplied: str | None):
+	if supplied and str(supplied).strip():
+		return str(supplied).strip()
+
+	try:
+		from erpnext.accounts.doctype.account.chart_of_accounts.chart_of_accounts import (
+			get_charts_for_country,
+		)
+
+		charts = get_charts_for_country(country) or []
+		if charts:
+			return charts[0]
+	except Exception:
+		frappe.log_error(
+			title="NOZOM Setup Chart Lookup",
+			message=frappe.get_traceback(),
+		)
+
+	return ""
+
+
+@frappe.whitelist(
+	allow_guest=True,
+	methods=["POST"],
+)
+def complete_company_setup(
+	timestamp: str | None = None,
+	signature: str | None = None,
+	setup: dict | str | None = None,
+):
+	"""
+	Trusted Cloud → site ERPNext setup completion.
+
+	Runs the official Frappe/ERPNext setup wizard path (idempotent).
+	Does not hide the wizard — it completes it through setup_complete.
+	Passwords must arrive in the JSON body only; never log them.
+	"""
+
+	form = frappe.local.form_dict or frappe._dict()
+	timestamp = timestamp or form.get("timestamp")
+	signature = signature or form.get("signature")
+	setup = setup if setup is not None else form.get("setup")
+
+	if not _verify_nozom_request(
+		str(timestamp or ""),
+		str(signature or ""),
+	):
+		frappe.throw(
+			_("Not permitted"),
+			frappe.PermissionError,
+		)
+
+	if frappe.is_setup_complete():
+		return {
+			"status": "ok",
+			"setup_complete": True,
+			"already_complete": True,
+			"site": frappe.local.site,
+		}
+
+	if isinstance(setup, str):
+		try:
+			setup = json.loads(setup)
+		except json.JSONDecodeError:
+			frappe.throw(_("Invalid setup payload"))
+
+	if not isinstance(setup, dict):
+		frappe.throw(_("Invalid setup payload"))
+
+	args = frappe._dict(setup)
+
+	required = [
+		"country",
+		"currency",
+		"timezone",
+		"company_name",
+		"company_abbr",
+		"full_name",
+		"email",
+		"password",
+		"fy_start_date",
+		"fy_end_date",
+	]
+
+	missing = [key for key in required if not args.get(key)]
+	if missing:
+		frappe.throw(
+			_("Missing setup fields: {0}").format(
+				", ".join(missing)
+			)
+		)
+
+	args.chart_of_accounts = _resolve_chart_of_accounts(
+		args.country,
+		args.get("chart_of_accounts"),
+	)
+
+	# Never create a second Administrator. System Manager user is created
+	# by frappe setup_complete / create_or_update_user from email+password.
+	from frappe.desk.page.setup_wizard.setup_wizard import (
+		setup_complete as frappe_setup_complete,
+	)
+
+	# Mute welcome mails; Cloud owns customer messaging.
+	_mute_emails, frappe.flags.mute_emails = frappe.flags.mute_emails, True
+
+	try:
+		result = frappe_setup_complete(args)
+	finally:
+		frappe.flags.mute_emails = _mute_emails
+		# Best-effort wipe of password from form_dict after use.
+		if hasattr(frappe.local, "form_dict") and frappe.local.form_dict:
+			if isinstance(frappe.local.form_dict.get("setup"), dict):
+				frappe.local.form_dict.setup.pop("password", None)
+			frappe.local.form_dict.pop("password", None)
+
+	frappe.db.commit()
+
+	return {
+		"status": (result or {}).get("status") if isinstance(result, dict) else "ok",
+		"setup_complete": bool(frappe.is_setup_complete()),
+		"already_complete": False,
+		"site": frappe.local.site,
+	}
